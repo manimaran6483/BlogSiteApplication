@@ -16,18 +16,19 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { BlogsComponent } from './blogs/blogs.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ProfileComponent, BlogsComponent
+  declarations: [AppComponent, ProfileComponent, BlogsComponent, RegisterComponent, LoginComponent
   ],
   imports: [
     BrowserModule,

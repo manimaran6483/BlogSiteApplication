@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BlogsComponent } from './blogs/blogs.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
@@ -11,18 +12,21 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: 'blogs',
-    component: BlogsComponent
-
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '',
-    component: HomeComponent,
+    component: BlogsComponent,
   },
   {
     // Needed for Error routing
     path: 'error',
-    component: HomeComponent,
+    component: BlogsComponent,
   }
 ];
 

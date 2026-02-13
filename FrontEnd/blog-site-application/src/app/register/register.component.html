@@ -1,0 +1,32 @@
+<mat-card class="auth-card">
+  <mat-card-title>Register</mat-card-title>
+  <mat-card-content>
+    <form #f="ngForm" (ngSubmit)="submit(f)">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Name</mat-label>
+        <input matInput name="name" #nameCtrl="ngModel" [(ngModel)]="name" required minlength="2" />
+        <mat-error *ngIf="nameCtrl.invalid && (nameCtrl.touched || f.submitted)">Please enter your name (min 2 chars)</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" #emailCtrl="ngModel" [(ngModel)]="email" required email />
+        <mat-error *ngIf="emailCtrl.invalid && (emailCtrl.touched || f.submitted)">
+          <span *ngIf="emailCtrl.errors?.required">Email is required</span>
+          <span *ngIf="emailCtrl.errors?.email">Enter a valid email</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" #passwordCtrl="ngModel" [(ngModel)]="password" required minlength="6" type="password" />
+        <mat-error *ngIf="passwordCtrl.invalid && (passwordCtrl.touched || f.submitted)">Password must be at least 6 characters</mat-error>
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-stroked-button type="button" routerLink="/login">Back to Login</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="submitting">Register</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
