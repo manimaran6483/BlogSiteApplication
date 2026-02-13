@@ -22,5 +22,9 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 	@Query("SELECT b FROM Blog b WHERE b.category = :category " + "AND b.createdAt BETWEEN :fromDate AND :toDate "
 			+ "ORDER BY b.createdAt DESC")
 	List<Blog> findByCategoryAndDateRange(String category, LocalDateTime fromDate, LocalDateTime toDate);
+	
+	@Query("SELECT b FROM Blog b WHERE b.createdAt BETWEEN :fromDate AND :toDate "
+			+ "ORDER BY b.createdAt DESC")
+	List<Blog> findByDateRange(LocalDateTime fromDate, LocalDateTime toDate);
 
 }

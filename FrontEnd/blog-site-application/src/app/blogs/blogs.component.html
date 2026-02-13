@@ -6,6 +6,42 @@
 		</div>
 	</div>
 
+	<!-- Filter bar -->
+	<div class="filter-bar">
+		<mat-form-field appearance="outline" class="filter-item">
+			<mat-label>Category</mat-label>
+			<mat-select [(ngModel)]="selectedCategory">
+				<mat-option value="">All</mat-option>
+				<mat-option *ngFor="let c of categories" [value]="c">{{ c }}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="filter-item">
+			<mat-label>Sort</mat-label>
+			<mat-select [(ngModel)]="sortOption" (selectionChange)="applySort()">
+				<mat-option value="createdAt_desc">Date (newest)</mat-option>
+				<mat-option value="createdAt_asc">Date (oldest)</mat-option>
+				<mat-option value="category_asc">Category (A→Z)</mat-option>
+				<mat-option value="category_desc">Category (Z→A)</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<div class="filter-item">
+			<label>From</label>
+			<input type="date" [(ngModel)]="startDate" />
+		</div>
+
+		<div class="filter-item">
+			<label>To</label>
+			<input type="date" [(ngModel)]="endDate" />
+		</div>
+
+		<div class="filter-actions">
+			<button mat-button (click)="clearFilter()">Clear</button>
+			<button mat-raised-button color="primary" (click)="applyFilter()">Filter</button>
+		</div>
+	</div>
+
 	<div *ngIf="showAddForm" class="add-form">
 		<mat-card>
 			<mat-card-content>
@@ -41,30 +77,28 @@
 
 	<div class="blogs-list">
 		<mat-card class="blog-card" *ngFor="let blog of blogs">
-			<mat-card-header>
-				<div class="header-left">
-					<div class="title">
-						<ng-container *ngIf="editingId !== blog.id; else editName">
-							<span class="blog-name">{{ blog.blogName }}</span>
-						</ng-container>
-						<ng-template #editName>
-							<mat-form-field appearance="standard">
-								<input matInput [(ngModel)]="blog.blogName" />
-							</mat-form-field>
-						</ng-template>
-						<span class="author"> - {{ blog.authorName }}</span>
+				<div class="card-header">
+					<div class="header-left">
+						<div class="title">
+							<ng-container *ngIf="editingId !== blog.id; else editName">
+								<span class="blog-name">{{ blog.blogName }}</span>
+							</ng-container>
+							<ng-template #editName>
+								<mat-form-field appearance="standard">
+									<input matInput [(ngModel)]="blog.blogName" />
+								</mat-form-field>
+							</ng-template>
+							<span class="author"> - {{ blog.authorName }}</span>
+						</div>
+					</div>
+					<div class="header-right">
+						<div class="created">{{ blog.createdAt | date:'medium' }}</div>
 					</div>
 				</div>
-				<div class="header-right">
-					<div class="created">{{ blog.createdAt | date:'medium' }}</div>
-				</div>
-			</mat-card-header>
 
 			<mat-card-content>
 				<div class="category">
-					<mat-chip-list>
-						<mat-chip color="primary" selected>{{ blog.category }}</mat-chip>
-					</mat-chip-list>
+					<span class="category-pill">{{ blog.category }}</span>
 				</div>
 
 				<div class="article">

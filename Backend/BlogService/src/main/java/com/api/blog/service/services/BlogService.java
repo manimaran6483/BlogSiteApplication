@@ -148,4 +148,21 @@ public class BlogService {
                 .map(BlogResponse::fromEntity)
                 .collect(Collectors.toList());
 	}
+
+	public List<BlogResponse> getBlogsByDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
+
+		log.info("Fetching blogs -  From: {}, To: {}", 
+               fromDate, toDate);
+
+        List<Blog> blogs = blogRepository.findByDateRange(fromDate, toDate
+        );
+
+        if (blogs.isEmpty()) {
+            log.warn("No blogs found for given criteria");
+        }
+
+        return blogs.stream()
+                .map(BlogResponse::fromEntity)
+                .collect(Collectors.toList());
+	}
 }

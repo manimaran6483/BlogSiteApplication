@@ -36,5 +36,20 @@ export class BlogService {
     return this.http.get<Blog>(url);
   }  
 
+  getBlogByCategory(category: string): Observable<Blog[]> {
+    const url = `${this.appUrl}/blogs/info/${category}`;
+    return this.http.get<Blog[]>(url);
+  }
+
+  getBlogsByDateRange(startDate: string, endDate: string): Observable<Blog[]> {
+    const url = `${this.appUrl}/blogs/getrange/${startDate}/${endDate}`;
+    return this.http.get<Blog[]>(url);
+  }
+
+  getBlogsByCategoryInRange(category: string, startDate: string, endDate: string): Observable<Blog[]> {
+    const url = `${this.appUrl}/blogs/get/${category}/${startDate}/${endDate}`;
+    return this.http.get<Blog[]>(url);
+  }
+
   
 }

@@ -14,6 +14,14 @@ export class BlogsComponent implements OnInit {
   editingId: number | null = null;
   newBlog: Partial<Blog> = { blogName: '', category: '', authorName: '', article: '' };
 
+  // Filter state
+  categories: string[] = [];
+  selectedCategory: string = '';
+  startDate: string = '';
+  endDate: string = '';
+  // Sorting
+  sortOption: string = 'createdAt_desc';
+
   constructor(private blogService: BlogService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -22,7 +30,14 @@ export class BlogsComponent implements OnInit {
 
   loadBlogs() {
     this.blogService.getAllBlogs().subscribe(
-      (data) => this.blogs = data || [],
+      (data) => {
+        this.blogs = data || [];
+        // Extract unique categories for filter dropdown
+        const set = new Set<string>();
+        (this.blogs || []).forEach(b => { if (b.category) set.add(b.category); });
+        this.categories = Array.from(set).sort();
+        this.applySort();
+      },
       (err) => this.snackBar.open('Failed loading blogs', 'Close', { duration: 3000 })
     );
   }
@@ -52,7 +67,7 @@ export class BlogsComponent implements OnInit {
         this.snackBar.open('Blog added', 'Close', { duration: 2000 });
         this.showAddForm = false;
         this.resetNewBlog();
-        this.loadBlogs();
+        this.clearFilterAndReload();
       },
       (err) => this.snackBar.open('Failed to add blog', 'Close', { duration: 3000 })
     );
@@ -72,7 +87,7 @@ export class BlogsComponent implements OnInit {
       (res) => {
         this.snackBar.open('Blog updated', 'Close', { duration: 2000 });
         this.editingId = null;
-        this.loadBlogs();
+        this.clearFilterAndReload();
       },
       (err) => this.snackBar.open('Failed to update', 'Close', { duration: 3000 })
     );
@@ -82,12 +97,93 @@ export class BlogsComponent implements OnInit {
     const ok = confirm('Are you sure you want to delete this blog?');
     if (!ok) return;
     this.blogService.deleteBlog(id).subscribe(
-      () => {
-        this.snackBar.open('Blog deleted', 'Close', { duration: 2000 });
-        this.blogs = this.blogs.filter(b => b.id !== id);
+      (res: any) => {
+        this.snackBar.open(res, 'Close', { duration: 2000 });
+        this.clearFilterAndReload();
       },
-      () => this.snackBar.open('Failed to delete', 'Close', { duration: 3000 })
+      (err:any) => {
+        this.snackBar.open('Failed to delete blog', 'Close', { duration: 3000 });
+        console.log(err);
+      }
     );
+  }
+
+  // Apply filters based on selectedCategory and date range (YYYY-MM-DD)
+  applyFilter() {
+    const cat = this.selectedCategory && this.selectedCategory !== 'ALL' ? this.selectedCategory : '';
+    const start = this.startDate ? this.formatDate(this.startDate) : '';
+    const end = this.endDate ? this.formatDate(this.endDate) : '';
+
+    if (cat && start && end) {
+      this.blogService.getBlogsByCategoryInRange(cat, start, end).subscribe(
+        (data) => { this.blogs = data || []; this.applySort(); },
+        () => this.snackBar.open('Failed to load filtered blogs', 'Close', { duration: 3000 })
+      );
+      return;
+    }
+
+    if (cat) {
+      this.blogService.getBlogByCategory(cat).subscribe(
+        (data) => { this.blogs = data || []; this.applySort(); },
+        () => this.snackBar.open('Failed to load category blogs', 'Close', { duration: 3000 })
+      );
+      return;
+    }
+
+    if (start && end) {
+      this.blogService.getBlogsByDateRange(start, end).subscribe(
+        (data) => { this.blogs = data || []; this.applySort(); },
+        () => this.snackBar.open('Failed to load date-range blogs', 'Close', { duration: 3000 })
+      );
+      return;
+    }
+
+    // no filter -> full list
+    this.loadBlogs();
+  }
+
+  applySort() {
+    if (!this.blogs || !this.blogs.length) return;
+    const opt = this.sortOption || 'createdAt_desc';
+    const [field, dir] = opt.split('_');
+    const asc = dir === 'asc';
+    if (field === 'createdAt') {
+      this.blogs.sort((a, b) => {
+        const ta = a.createdAt ? Date.parse(a.createdAt) : 0;
+        const tb = b.createdAt ? Date.parse(b.createdAt) : 0;
+        return asc ? ta - tb : tb - ta;
+      });
+    } else if (field === 'category') {
+      this.blogs.sort((a, b) => {
+        const ca = (a.category || '').toLowerCase();
+        const cb = (b.category || '').toLowerCase();
+        return asc ? ca.localeCompare(cb) : cb.localeCompare(ca);
+      });
+    }
+  }
+
+  clearFilter() {
+    this.selectedCategory = '';
+    this.startDate = '';
+    this.endDate = '';
+    this.loadBlogs();
+  }
+
+  clearFilterAndReload() {
+    // reloads but preserves current filter values; if any filter active, reapply, else load all
+    if (this.selectedCategory || this.startDate || this.endDate) {
+      this.applyFilter();
+    } else {
+      this.loadBlogs();
+    }
+  }
+
+  private formatDate(input: string) {
+    // input is expected YYYY-MM-DD already from <input type=date>
+    // ensure format and return
+    if (!input) return '';
+    const d = input.split('T')[0];
+    return d;
   }
 
 }

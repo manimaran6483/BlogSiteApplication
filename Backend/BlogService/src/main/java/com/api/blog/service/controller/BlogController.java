@@ -113,6 +113,19 @@ public class BlogController {
 		
 	}
 	
+	@GetMapping("/blogs/getrange/{fromRange}/{toRange}")
+	public ResponseEntity<List<BlogResponse>> getAllBlogsInRange(@PathVariable String fromRange, @PathVariable String toRange){
+	
+		log.info("Get all blogs in given range- " + fromRange + " - " + toRange);
+		String time = "T00:00:10";
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+		LocalDateTime fromDate = LocalDateTime.parse(fromRange+time, formatter); 
+		LocalDateTime toDate = LocalDateTime.parse(toRange+time, formatter);
+		List<BlogResponse> blogs = blogService.getBlogsByDateRange(fromDate, toDate);
+		
+		return new ResponseEntity<List<BlogResponse>>(blogs, HttpStatus.OK);
+	}
+	
 	@PutMapping("/user/blogs/update/{id}")
 	public ResponseEntity<BlogResponse> updateBlogById(@PathVariable String id,
 			@RequestBody BlogRequest request){
