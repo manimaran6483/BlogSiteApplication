@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ms-identity-javascript-angular-spa": {
+    "blog-site-application": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ms-identity-javascript-angular-spa",
+            "outputPath": "dist/blog-site-application",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ms-identity-javascript-angular-spa:build:production"
+              "browserTarget": "blog-site-application:build:production"
             },
             "development": {
-              "browserTarget": "ms-identity-javascript-angular-spa:build:development"
+              "browserTarget": "blog-site-application:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ms-identity-javascript-angular-spa:build"
+            "browserTarget": "blog-site-application:build"
           }
         },
         "test": {

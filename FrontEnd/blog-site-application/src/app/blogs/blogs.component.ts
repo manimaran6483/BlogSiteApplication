@@ -43,8 +43,8 @@ export class BlogsComponent implements OnInit {
       category: this.newBlog.category || '',
       authorName: this.newBlog.authorName || '',
       article: this.newBlog.article || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: '',
+      updatedAt: '',
       message: ''
     };
     this.blogService.addBlog(payload).subscribe(

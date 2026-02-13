@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/ms-identity-javascript-angular-spa'),
+      dir: require('path').join(__dirname, './coverage/blog-site-application'),
       subdir: '.',
       reporters: [
         { type: 'html' },
