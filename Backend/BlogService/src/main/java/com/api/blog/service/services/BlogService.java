@@ -141,4 +141,11 @@ public class BlogService {
         return BlogResponse.fromEntity(savedBlog, "Blog updated successfully!");
         
 	}
+
+	public List<BlogResponse> getBlogs() {
+		List<Blog> blogList = blogRepository.findAll();
+		return blogList.stream()
+                .map(BlogResponse::fromEntity)
+                .collect(Collectors.toList());
+	}
 }

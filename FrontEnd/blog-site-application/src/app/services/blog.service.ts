@@ -16,42 +16,25 @@ export class BlogService {
   constructor(private http: HttpClient) { }
 
   getAllBlogs(): Observable<Blog[]> {
-    const url = `${this.appUrl}/user/getall`;
-    return this.http.get<Blog[]>(this.appUrl);
+    const url = `${this.appUrl}/user/getallblogs`;
+    return this.http.get<Blog[]>(url);
   }
   deleteBlog(id: number): Observable<Blog> {
-    const url = `${this.appUrl}/${id}`;
+    const url = `${this.appUrl}/user/delete/${id}`;
     return this.http.delete<Blog>(url);
   }
-  addBlog(emp: Blog): Observable<Blog> {
-    return this.http.post<Blog>(this.appUrl, emp);
+  addBlog(blog: Blog): Observable<Blog> {
+    const url = `${this.appUrl}/user/blog/add`;
+    return this.http.post<Blog>(url, blog);
   }
-  updateBlog(emp: Blog): Observable<Blog> {
-    const url = `${this.appUrl}/${emp.id}`;
-    return this.http.put<Blog>(url, emp);
+  updateBlog(blog: Blog): Observable<Blog> {
+    const url = `${this.appUrl}/user/blogs/update/${blog.id}`;
+    return this.http.put<Blog>(url, blog);
   }
   getBlogByAuthorName(name: string): Observable<Blog> {
     const url = `${this.appUrl}/user/getall?authorName=${name}`;
     return this.http.get<Blog>(url);
-  }
-
-  // create a function to search for employees
-  searchBlogs(term: string): Observable<Blog[]> {
-    if (!term.trim()) {
-      return this.getAllBlogs();
-    }
-    return this.http.get<Blog[]>(`${this.appUrl}/search/${term}`);
-  }
-
-  // create a function to search employee by name
-  searchBlogByAuthorName(name: string): Observable<Blog[]> {
-    if (!name.trim()) {
-      return this.getAllBlogs();
-    }
-    return this.http.get<Blog[]>(`${this.appUrl}/searchName/${name}`);
-  }
-  
-  
+  }  
 
   
 }

@@ -28,12 +28,12 @@
   <a class="title" href="/">{{ title }}</a>
   <div class="toolbar-spacer"></div>
   <a mat-button [routerLink]="['profile']">Profile</a>
-  <a mat-button routerLink="/employees">Employees</a>
+  <a mat-button routerLink="/blogs">Blogs</a>
   
   <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">Login</button>
   <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">Logout</button>
 </mat-toolbar>
 <div class="container">
   <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
-  <router-outlet *ngIf="!isIframe"></router-outlet>
+  <router-outlet></router-outlet>
 </div>

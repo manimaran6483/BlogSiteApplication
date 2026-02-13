@@ -77,6 +77,17 @@ public class BlogController {
 		
 	}
 	
+	@GetMapping("/user/getallblogs")
+	public ResponseEntity<List<BlogResponse>> getAllBlogs(){
+		
+		log.info("Get all blogs ");
+		
+		List<BlogResponse> blogs = blogService.getBlogs();
+		
+		return new ResponseEntity<List<BlogResponse>>(blogs, HttpStatus.OK);
+		
+	}
+	
 	@GetMapping("/blogs/info/{category}")
 	public ResponseEntity<List<BlogResponse>> getAllBlogsForCategory(@PathVariable String category){
 		
