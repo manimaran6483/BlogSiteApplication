@@ -4,12 +4,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const routes: Routes = [
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',
@@ -22,11 +24,13 @@ const routes: Routes = [
   {
     path: '',
     component: BlogsComponent,
+    canActivate: [AuthGuard]
   },
   {
     // Needed for Error routing
     path: 'error',
     component: BlogsComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

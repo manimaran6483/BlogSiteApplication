@@ -23,6 +23,8 @@ export class LoginComponent {
     this.userService.login(payload).subscribe(
       (res) => {
         this.snackBar.open('Login successful', 'Close', { duration: 2500 });
+        // store a simple token flag (replace with real token handling)
+        try { localStorage.setItem('auth_token', res && res.token ? res.token : '1'); } catch {}
         this.submitting = false;
         // on success navigate to profile or home
         this.router.navigate(['/profile']);

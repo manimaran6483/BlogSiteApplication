@@ -6,8 +6,8 @@
         <mat-label>Email</mat-label>
         <input matInput name="email" #emailCtrl="ngModel" [(ngModel)]="email" required email />
         <mat-error *ngIf="emailCtrl.invalid && (emailCtrl.touched || f.submitted)">
-          <span *ngIf="emailCtrl.errors?.required">Email is required</span>
-          <span *ngIf="emailCtrl.errors?.email">Enter a valid email</span>
+          <span *ngIf="emailCtrl.errors?.['required']">Email is required</span>
+          <span *ngIf="emailCtrl.errors?.['email']">Enter a valid email</span>
         </mat-error>
       </mat-form-field>
 
