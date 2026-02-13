@@ -12,7 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class BlogService {
-  private appUrl = 'localhost:8082/api/v1.0/blogsite';
+  private appUrl = 'http://localhost:8082/api/v1.0/blogsite';
   constructor(private http: HttpClient) { }
 
   getAllBlogs(): Observable<Blog[]> {

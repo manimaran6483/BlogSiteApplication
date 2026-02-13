@@ -1,1 +1,94 @@
-<p>blogs works!</p>
+<div class="blogs-page">
+	<div class="header">
+		<h2>Blogs</h2>
+		<div class="actions">
+			<button mat-raised-button color="primary" (click)="toggleAddForm()">{{ showAddForm ? 'Close' : 'Add Blog' }}</button>
+		</div>
+	</div>
+
+	<div *ngIf="showAddForm" class="add-form">
+		<mat-card>
+			<mat-card-content>
+				<div class="form-row">
+					<mat-form-field appearance="outline" class="full">
+						<mat-label>Blog Name</mat-label>
+						<input matInput [(ngModel)]="newBlog.blogName" />
+					</mat-form-field>
+				</div>
+				<div class="form-row two">
+					<mat-form-field appearance="outline">
+						<mat-label>Author</mat-label>
+						<input matInput [(ngModel)]="newBlog.authorName" />
+					</mat-form-field>
+					<mat-form-field appearance="outline">
+						<mat-label>Category</mat-label>
+						<input matInput [(ngModel)]="newBlog.category" />
+					</mat-form-field>
+				</div>
+				<div class="form-row">
+					<mat-form-field appearance="outline" class="full">
+						<mat-label>Article</mat-label>
+						<textarea matInput rows="6" [(ngModel)]="newBlog.article"></textarea>
+					</mat-form-field>
+				</div>
+				<div class="form-actions">
+					<button mat-button (click)="toggleAddForm()">Cancel</button>
+					<button mat-raised-button color="primary" (click)="addBlog()">Submit</button>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+
+	<div class="blogs-list">
+		<mat-card class="blog-card" *ngFor="let blog of blogs">
+			<mat-card-header>
+				<div class="header-left">
+					<div class="title">
+						<ng-container *ngIf="editingId !== blog.id; else editName">
+							<span class="blog-name">{{ blog.blogName }}</span>
+						</ng-container>
+						<ng-template #editName>
+							<mat-form-field appearance="standard">
+								<input matInput [(ngModel)]="blog.blogName" />
+							</mat-form-field>
+						</ng-template>
+						<span class="author"> - {{ blog.authorName }}</span>
+					</div>
+				</div>
+				<div class="header-right">
+					<div class="created">{{ blog.createdAt | date:'medium' }}</div>
+				</div>
+			</mat-card-header>
+
+			<mat-card-content>
+				<div class="category">
+					<mat-chip-list>
+						<mat-chip color="primary" selected>{{ blog.category }}</mat-chip>
+					</mat-chip-list>
+				</div>
+
+				<div class="article">
+					<ng-container *ngIf="editingId !== blog.id; else editArticle">
+						<div class="article-text">{{ blog.article }}</div>
+					</ng-container>
+					<ng-template #editArticle>
+						<mat-form-field appearance="outline" class="full">
+							<textarea matInput rows="8" [(ngModel)]="blog.article"></textarea>
+						</mat-form-field>
+					</ng-template>
+				</div>
+			</mat-card-content>
+
+			<mat-card-actions align="end" class="card-actions">
+				<ng-container *ngIf="editingId !== blog.id; else editingButtons">
+					<button mat-button (click)="startEdit(blog)">Edit</button>
+					<button mat-button color="warn" (click)="deleteBlog(blog.id)">Delete</button>
+				</ng-container>
+				<ng-template #editingButtons>
+					<button mat-button (click)="cancelEdit()">Cancel</button>
+					<button mat-raised-button color="primary" (click)="saveEdit(blog)">Save</button>
+				</ng-template>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+</div>
