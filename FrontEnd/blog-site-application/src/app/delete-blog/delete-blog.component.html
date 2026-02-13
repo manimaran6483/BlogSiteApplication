@@ -1,0 +1,14 @@
+<div class="container">
+<h1 class="text-danger">Delete Employee {{blog.blogName}}</h1>
+    <div class="col-6">
+        <table class="table table-striped table-border">
+            <tr>
+                <td>Blog Id</td>
+                <td>{{blog.id}}</td>
+            </tr>
+
+        </table>
+        <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+        <button class="btn btn-primary" (click)="onCancel()">Cancel</button>
+    </div>
+</div>
