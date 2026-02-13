@@ -1,0 +1,15 @@
+.toolbar-spacer {
+    flex: 1 1 auto;
+  }
+  
+  a {
+    color: white;
+  }
+  h3{
+    padding:20px;
+    background-color: greenyellow ;
+    border:1px solid green;
+}
+.title{
+  padding-right: 5px;
+}
