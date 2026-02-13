@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.auth.service.model.User;
 import com.api.auth.service.service.UserServiceImpl;
+import com.api.auth.service.security.JwtUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,9 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImpl userService;
+
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	static class RegisterRequest {
 		public String name;
@@ -51,10 +55,11 @@ public class UserController {
 	public ResponseEntity<?> login(@RequestBody LoginRequest req) {
 		try {
 			User u = userService.authenticate(req.email, req.password);
-			// For demo purposes return a simple token placeholder
+			// Generate a valid JWT token
+			String token = jwtUtil.generateToken(u.getEmail());
 			Map<String, Object> m = new HashMap<>();
 			m.put("message", "Login successful");
-			m.put("token", "demo-token-" + u.getId());
+			m.put("token", token);
 			m.put("userId", u.getId());
 			return ResponseEntity.ok(m);
 		} catch (Exception ex) {
