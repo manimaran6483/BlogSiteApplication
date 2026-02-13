@@ -24,10 +24,17 @@ export class LoginComponent {
       (res) => {
         this.snackBar.open('Login successful', 'Close', { duration: 2500 });
         // store a simple token flag (replace with real token handling)
-        try { localStorage.setItem('auth_token', res && res.token ? res.token : '1'); } catch {}
+        try {
+          localStorage.setItem(
+            'auth_token',
+            res && res.token ? res.token : '1',
+          );
+          sessionStorage.setItem('emailId', res && res.emailId ? res.emailId : '');
+          sessionStorage.setItem('name', res && res.name ? res.name : '');
+        } catch {}
         this.submitting = false;
         // on success navigate to profile or home
-        this.router.navigate(['/profile']);
+        this.router.navigate(['']);
       },
       (err) => {
         const msg = err && err.error && err.error.message ? err.error.message : 'Login failed';

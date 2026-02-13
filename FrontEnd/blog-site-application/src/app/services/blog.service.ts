@@ -12,16 +12,17 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class BlogService {
-  private appUrl = 'http://localhost:8082/api/v1.0/blogsite';
+  private appUrl = 'http://localhost:8085/api/v1.0/blogsite';
   constructor(private http: HttpClient) { }
 
   getAllBlogs(): Observable<Blog[]> {
     const url = `${this.appUrl}/user/getallblogs`;
     return this.http.get<Blog[]>(url);
   }
-  deleteBlog(id: number): Observable<Blog> {
+  deleteBlog(id: number): Observable<string> {
     const url = `${this.appUrl}/user/delete/${id}`;
-    return this.http.delete<Blog>(url);
+    // Backend returns a plain text message on successful delete; request text response
+    return this.http.delete(url, { responseType: 'text' });
   }
   addBlog(blog: Blog): Observable<Blog> {
     const url = `${this.appUrl}/user/blog/add`;

@@ -14,7 +14,8 @@ public class GatewayConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("*"));
+        // Restrict origins to the frontend to avoid duplicate Access-Control-Allow-Origin headers
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         corsConfig.setMaxAge(3600L);
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfig.setAllowedHeaders(Arrays.asList("*"));

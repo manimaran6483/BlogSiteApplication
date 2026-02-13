@@ -21,11 +21,20 @@ export class BlogsComponent implements OnInit {
   endDate: string = '';
   // Sorting
   sortOption: string = 'createdAt_desc';
+  // Logged-in user email from session storage
+  currentUserEmail: string | null = null;
 
   constructor(private blogService: BlogService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.currentUserEmail = sessionStorage.getItem('emailId');
     this.loadBlogs();
+  }
+
+  isOwner(blog: Blog): boolean {
+    if (!blog) return false;
+    const email = this.currentUserEmail || sessionStorage.getItem('emailId');
+    return !!email && blog.authorName === email;
   }
 
   loadBlogs() {
@@ -56,7 +65,7 @@ export class BlogsComponent implements OnInit {
       id: 0,
       blogName: this.newBlog.blogName || '',
       category: this.newBlog.category || '',
-      authorName: this.newBlog.authorName || '',
+      authorName: sessionStorage.getItem('emailId') || 'Unknown',
       article: this.newBlog.article || '',
       createdAt: '',
       updatedAt: '',

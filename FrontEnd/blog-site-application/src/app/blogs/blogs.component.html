@@ -51,12 +51,8 @@
 						<input matInput [(ngModel)]="newBlog.blogName" />
 					</mat-form-field>
 				</div>
-				<div class="form-row two">
-					<mat-form-field appearance="outline">
-						<mat-label>Author</mat-label>
-						<input matInput [(ngModel)]="newBlog.authorName" />
-					</mat-form-field>
-					<mat-form-field appearance="outline">
+				<div class="form-row">
+					<mat-form-field appearance="outline" class="full">
 						<mat-label>Category</mat-label>
 						<input matInput [(ngModel)]="newBlog.category" />
 					</mat-form-field>
@@ -115,12 +111,16 @@
 
 			<mat-card-actions align="end" class="card-actions">
 				<ng-container *ngIf="editingId !== blog.id; else editingButtons">
-					<button mat-button (click)="startEdit(blog)">Edit</button>
-					<button mat-button color="warn" (click)="deleteBlog(blog.id)">Delete</button>
+					<ng-container *ngIf="isOwner(blog)">
+						<button mat-button (click)="startEdit(blog)">Edit</button>
+						<button mat-button color="warn" (click)="deleteBlog(blog.id)">Delete</button>
+					</ng-container>
 				</ng-container>
 				<ng-template #editingButtons>
-					<button mat-button (click)="cancelEdit()">Cancel</button>
-					<button mat-raised-button color="primary" (click)="saveEdit(blog)">Save</button>
+					<ng-container *ngIf="isOwner(blog)">
+						<button mat-button (click)="cancelEdit()">Cancel</button>
+						<button mat-raised-button color="primary" (click)="saveEdit(blog)">Save</button>
+					</ng-container>
 				</ng-template>
 			</mat-card-actions>
 		</mat-card>

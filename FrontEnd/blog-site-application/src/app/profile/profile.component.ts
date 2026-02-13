@@ -4,10 +4,9 @@ import { HttpClient } from '@angular/common/http';
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 type ProfileType = {
-  givenName?: string,
-  surname?: string,
-  userPrincipalName?: string,
-  id?: string
+  id?: string,
+  name?: string,
+  emailId?: string
 }
 
 @Component({
@@ -27,9 +26,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfile() {
-    this.http.get(GRAPH_ENDPOINT)
-      .subscribe(profile => {
-        this.profile = profile;
-      });
+    this.profile = {
+      'name': sessionStorage.getItem('name') || '',
+      'emailId': sessionStorage.getItem('emailId') || ''
+    }
   }
 }

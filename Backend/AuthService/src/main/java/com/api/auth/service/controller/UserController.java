@@ -61,6 +61,8 @@ public class UserController {
 			m.put("message", "Login successful");
 			m.put("token", token);
 			m.put("userId", u.getId());
+			m.put("emailId", u.getEmail());
+			m.put("name", u.getName());
 			return ResponseEntity.ok(m);
 		} catch (Exception ex) {
 			return ResponseEntity.status(401).body(Map.of("error", ex.getMessage()));

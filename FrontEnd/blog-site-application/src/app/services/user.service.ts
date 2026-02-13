@@ -9,7 +9,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class UserService {
   // Placeholder base URL - replace with real backend url
-  private baseUrl = 'http://localhost:8081/api/v1.0/users';
+  private baseUrl = 'http://localhost:8085/api/v1.0/users';
 
   constructor(private http: HttpClient) { }
 
