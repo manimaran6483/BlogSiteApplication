@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
         response.put("error", "Validation Failed");
         response.put("errors", fieldErrors);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BlogNotFoundException.class)

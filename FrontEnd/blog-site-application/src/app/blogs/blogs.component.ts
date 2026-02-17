@@ -125,7 +125,13 @@ export class BlogsComponent implements OnInit {
 
     if (cat && start && end) {
       this.blogService.getBlogsByCategoryInRange(cat, start, end).subscribe(
-        (data) => { this.blogs = data || []; this.applySort(); },
+        (data) => { 
+          this.blogs = data || []; 
+          if (this.blogs.length === 0) {
+            this.snackBar.open('No data found for the given criteria', 'Close', { duration: 3000 });
+          }
+          this.applySort(); 
+        },
         () => this.snackBar.open('Failed to load filtered blogs', 'Close', { duration: 3000 })
       );
       return;
@@ -133,7 +139,13 @@ export class BlogsComponent implements OnInit {
 
     if (cat) {
       this.blogService.getBlogByCategory(cat).subscribe(
-        (data) => { this.blogs = data || []; this.applySort(); },
+        (data) => { 
+          this.blogs = data || []; 
+          if (this.blogs.length === 0) {
+            this.snackBar.open('No data found for the given criteria', 'Close', { duration: 3000 });
+          }
+          this.applySort(); 
+        },
         () => this.snackBar.open('Failed to load category blogs', 'Close', { duration: 3000 })
       );
       return;
@@ -141,7 +153,13 @@ export class BlogsComponent implements OnInit {
 
     if (start && end) {
       this.blogService.getBlogsByDateRange(start, end).subscribe(
-        (data) => { this.blogs = data || []; this.applySort(); },
+        (data) => { 
+          this.blogs = data || []; 
+          if (this.blogs.length === 0) {
+            this.snackBar.open('No data found for the given criteria', 'Close', { duration: 3000 });
+          }
+          this.applySort(); 
+        },
         () => this.snackBar.open('Failed to load date-range blogs', 'Close', { duration: 3000 })
       );
       return;

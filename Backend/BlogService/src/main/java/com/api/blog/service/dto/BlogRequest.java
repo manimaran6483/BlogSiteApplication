@@ -30,4 +30,53 @@ public class BlogRequest {
     @NotBlank(message = "Author name is required")
     @Size(min = 3, max = 50, message = "Author name must be between 3 and 50 characters")
     private String authorName;
+
+    
+    
+	public BlogRequest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public BlogRequest(String blogName, String category, String article, String authorName) {
+		super();
+		this.blogName = blogName;
+		this.category = category;
+		this.article = article;
+		this.authorName = authorName;
+	}
+
+	public String getBlogName() {
+		return blogName;
+	}
+
+	public void setBlogName(String blogName) {
+		this.blogName = blogName;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getArticle() {
+		return article;
+	}
+
+	public void setArticle(String article) {
+		this.article = article;
+	}
+
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+    
+    
 }

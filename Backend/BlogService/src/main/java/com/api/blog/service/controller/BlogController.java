@@ -61,7 +61,7 @@ public class BlogController {
 		
 		blogService.deleteBlog(id);
 		
-		return new ResponseEntity<>("Blog Deleted Successfully", HttpStatus.OK);
+		return new ResponseEntity<String>("Blog Deleted Successfully", HttpStatus.OK);
 	}
 	
 	@GetMapping("/user/getall")

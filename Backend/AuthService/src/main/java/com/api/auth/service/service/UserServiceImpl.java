@@ -34,7 +34,7 @@ public class UserServiceImpl {
 
     public User authenticate(String email, String rawPassword) throws Exception {
         Optional<User> existing = userRepository.findByEmail(email);
-        if (existing.isEmpty()) {
+        if (!existing.isPresent()) {
             throw new Exception("Invalid credentials");
         }
         User u = existing.get();

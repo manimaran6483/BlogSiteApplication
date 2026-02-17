@@ -32,8 +32,15 @@ public class BlogService {
     private final BlogRepository blogRepository;
     
     private static final Logger log = LoggerFactory.getLogger(BlogService.class);
+    
+    
 
-    @Transactional
+    public BlogService(BlogRepository blogRepository) {
+		super();
+		this.blogRepository = blogRepository;
+	}
+
+	@Transactional
     public BlogResponse createBlog(BlogRequest request) {
         log.info("Creating new blog: {}", request.getBlogName());
 

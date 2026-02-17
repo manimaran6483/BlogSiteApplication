@@ -47,7 +47,7 @@ public class UserController {
 			m.put("id", u.getId());
 			return ResponseEntity.ok(m);
 		} catch (Exception ex) {
-			return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+			return ResponseEntity.badRequest().body("error "  + ex.getMessage());
 		}
 	}
 
@@ -65,7 +65,7 @@ public class UserController {
 			m.put("name", u.getName());
 			return ResponseEntity.ok(m);
 		} catch (Exception ex) {
-			return ResponseEntity.status(401).body(Map.of("error", ex.getMessage()));
+			return ResponseEntity.status(401).body("error "+ ex.getMessage());
 		}
 	}
 

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class JwtUtil {
 
     @PostConstruct
     public void init() {
-        if (secret != null && !secret.isBlank()) {
+        if (secret != null && StringUtils.isNotBlank(secret)) {
             try {
                 byte[] keyBytes = Decoders.BASE64.decode(secret.trim());
                 this.key = Keys.hmacShaKeyFor(keyBytes);
