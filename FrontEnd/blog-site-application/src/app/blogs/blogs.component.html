@@ -109,7 +109,7 @@
 				</div>
 			</mat-card-content>
 
-			<mat-card-actions align="end" class="card-actions">
+			<mat-card-actions class="card-actions">
 				<ng-container *ngIf="editingId !== blog.id; else editingButtons">
 					<ng-container *ngIf="isOwner(blog)">
 						<button mat-button (click)="startEdit(blog)">Edit</button>
